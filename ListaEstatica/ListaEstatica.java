@@ -61,7 +61,7 @@ public class ListaEstatica {
         } 
 	}
 	public void liberar() {
-		info = new int{10};
+		info = new int[10];
 		tamanho = 0;
 	}
 	public int obterElemento(int posicao) {
