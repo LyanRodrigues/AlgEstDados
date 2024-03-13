@@ -1,96 +1,103 @@
-public class ListaEstatica {
-	private int[] info;
+public class ListaEstatica<T> {
+	private T[] info;
 	private int tamanho;
-	
+	private static final int CAPACIDADE_INICIAL = 10;
+
 	public int getTamanho() {
 		return tamanho;
 	}
-	public void setTamanho(int tamanho) {
-		this.tamanho = tamanho;
-	}
-	
-	public ListaEstatica() { //criarLista
-		info = new int[10];
+
+	@SuppressWarnings("unchecked")
+	public ListaEstatica() {
+		info = (T[]) new Object[CAPACIDADE_INICIAL];
 		tamanho = 0;
 	}
-	
-	private void redimensionar() { 
-		int novoTamanho = tamanho + 10;
-		int[] novo = new int[novoTamanho];
-		
-		for (int i = 0; i < tamanho; i++) {
-			novo[i] = info[i];
-		}
-		
+
+	private void redimensionar() {
+		int novoTamanho = tamanho + CAPACIDADE_INICIAL;
+		@SuppressWarnings("unchecked")
+		T[] novo = (T[]) new Object[novoTamanho];
+
+		System.arraycopy(info, 0, novo, 0, tamanho);
+
 		info = novo;
-		
 	}
-	
-	
-	public void inserir(int valor) {
+
+	public void inserir(T valor) {
 		if (tamanho == info.length) {
 			redimensionar();
 		}
-		
-		info[tamanho] = valor; 
+
+		info[tamanho] = valor;
 		tamanho++;
 	}
-	
+
 	public void exibir() {
-		for(int i=0;i<info.length;i++){
-            System.out.print(info[i]+", ");
-        }
+		for (int i = 0; i < tamanho; i++) {
+			System.out.print(info[i] + ", ");
+		}
 	}
-	public int buscar(int valor) {
-        for (int i=0; i < info.length; i++){
-            if(valor == info[i]){
-                return i;
-            } 
-        } 
-        return -1;
+
+	public int buscar(T valor) {
+		for (int i = 0; i < tamanho; i++) {
+			if (valor.equals(info[i])) {
+				return i;
+			}
+		}
+		return -1;
 	}
-	public void retirar(int valor) {
-		for (int i=0; i < info.length; i++){ //para cada elemento dentro de info
-            if(valor == info[i]){ //se o elemento for igual ao valor pesquisado
-                for (int x=i; x < info.length-1; x++){ //entao para cada valor posterior se
-                    info[i] = info[i+1];           //movera uma casa para a esquerda
-                    i++;
-                    
-                } tamanho--;
-            } 
-        } 
+
+	public void retirar(T valor) {
+		for (int i = 0; i < tamanho; i++) {
+			if (valor.equals(info[i])) {
+				for (int x = i; x < tamanho - 1; x++) {
+					info[i] = info[i + 1];
+					i++;
+				}
+				tamanho--;
+			}
+		}
 	}
+
 	public void liberar() {
-		info = new int[10];
+		for (int i = 0; i < tamanho; i++) {
+			info[i] = null;
+		}
 		tamanho = 0;
 	}
-	public int obterElemento(int posicao) {
-		for(int i=0;i<info.length;i++){
-			if(info[posicao] == info[i]){
-				return info[posicao];
-			}
-		} throw new ArrayIndexOutOfBoundsException();
+
+	public T obterElemento(int posicao) {
+		if (posicao >= 0 && posicao < tamanho) {
+			return info[posicao];
+		} else {
+			throw new IndexOutOfBoundsException("Posição inválida: " + posicao);
+		}
 	}
+
 	public boolean estaVazia() {
-		for(int i =0; i<info.length;i++){
-			if(info[i] != 0){
-				return false;
-			}
-		} return true;
+		return tamanho == 0;
 	}
+
+	@Override
 	public String toString() {
-		String mensagem = "" + info[0];
-		for (int i=1; i < info.length; i++){
-			if(tamanho != info.length){
-				mensagem = mensagem + ",";
-			} 
-			mensagem = mensagem + info[i];
-		} return mensagem;
+		StringBuilder mensagem = new StringBuilder();
+	
+		if (tamanho > 0) {
+			mensagem.append(info[0]);
+			for (int i = 1; i < tamanho; i++) {
+				mensagem.append(", ").append(info[i]);
+			}
+		}
+	
+		return mensagem.toString();
 	}
-	public int[] getInfo() {
-		return info;
-	}
-	public void setInfo(int[] info) {
-		this.info = info;
+	
+
+	public void inverter() {
+		for (int i = 0; i < tamanho / 2; i++) {
+			T temp = info[i];
+			info[i] = info[tamanho - 1 - i];
+			info[tamanho - 1 - i] = temp;
+		}
 	}
 }

@@ -1,10 +1,11 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
 public class TesteListaEstatica {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ListaEstatica lista = new ListaEstatica();
+        ListaEstatica<Integer> lista = new ListaEstatica<>();
 
         System.out.println("============================================");
         System.out.println("=========== Lista Estática =================");
@@ -19,10 +20,11 @@ public class TesteListaEstatica {
             System.out.println("4. Verificar se a lista está vazia");
             System.out.println("5. Exibir lista");
             System.out.println("6. Liberar lista");
-            System.out.println("7. Sair");
+            System.out.println("7. Inverter lista");
+            System.out.println("8. Sair");
             System.out.println("============================================");
             System.out.print("Escolha uma opção: ");
-            
+
             try {
                 int escolha = scanner.nextInt();
 
@@ -69,7 +71,7 @@ public class TesteListaEstatica {
                         }
                         break;
 
-                        case 3:
+                    case 3:
                         // Retirar valor da lista
                         System.out.println("\n=========== Retirar valor da lista =============");
                         System.out.print("Digite o valor a ser retirado da lista: ");
@@ -77,7 +79,8 @@ public class TesteListaEstatica {
                         int posicaoRetirar = lista.buscar(valorRetirar);
                         if (posicaoRetirar != -1) {
                             System.out.println("\n============================================");
-                            System.out.println("Tem certeza de que deseja retirar o valor " + valorRetirar + " da lista?");
+                            System.out.println(
+                                    "Tem certeza de que deseja retirar o valor " + valorRetirar + " da lista?");
                             System.out.println("============================================");
                             System.out.println("Digite 's' para confirmar ou 'n' para cancelar:");
                             System.out.println("============================================");
@@ -133,10 +136,21 @@ public class TesteListaEstatica {
                         }
                         break;
                     case 7:
+                        // Inverter lista
+                        System.out.println("\n=========== Inverter lista ======================");
+                        if (!lista.estaVazia()) {
+                            lista.inverter();
+                            System.out.println("Lista invertida com sucesso.");
+                        } else {
+                            System.out.println("Não é possível inverter a lista porque ela está vazia.");
+                        }
+                        break;
+                    case 8:
                         // Sair do programa
                         System.out.println("\nEncerrando o programa...");
                         scanner.close();
                         return;
+
                     default:
                         System.out.println("\nOpção inválida. Por favor, escolha uma opção válida.");
                 }
@@ -147,4 +161,6 @@ public class TesteListaEstatica {
             }
         }
     }
+
+    
 }
