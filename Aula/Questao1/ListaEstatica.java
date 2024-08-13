@@ -1,23 +1,23 @@
-package Aula;
+package Aula.Questao1;
 
 public class ListaEstatica {
-    private int[] info;
+    private Object[] info;
     private int tamanho;
 
     public ListaEstatica() {
-        this.info = new int[10];
+        this.info = new Object[10];
         this.tamanho = 0;
     }
 
     private void redimensionar(){
-        int[] novoVetor = new int[info.length + 10];
+        Object[] novoVetor = new Object[info.length + 10];
         for(int i = 0; i < info.length; i++){
             novoVetor[i] = info[i];
         }
         info = novoVetor;
     }
 
-    public void inserir(int valor){
+    public void inserir(Object valor){
         if(tamanho == info.length){
             redimensionar();
         }
@@ -31,7 +31,7 @@ public class ListaEstatica {
         }
     }
 
-    public int buscar(int valor){
+    public int buscar(Object valor){
         for (int i = 0; i < tamanho; i++){
             if (info[i] == valor){
                 return i;
@@ -40,7 +40,7 @@ public class ListaEstatica {
         return -1;
     }
 
-    public void retirar(int valor){
+    public void retirar(Object valor){
         for (int i = 0; i < tamanho; i++) {
             if (valor == info[i]) {
                 for (int x = i; x < tamanho - 1; x++) {
@@ -53,11 +53,11 @@ public class ListaEstatica {
     }
 
     public void liberar(){
-        info = new int[10];
+        info = new Object[10];
         tamanho = 0;
     }
 
-    public int obterElemento(int posicao){
+    public Object obterElemento(int posicao){
         if(posicao >= 0 && posicao < tamanho){
             return info[posicao];
         }
@@ -73,14 +73,13 @@ public class ListaEstatica {
     }
 
     public String toString(){
-        StringBuilder sb = new StringBuilder("[");
-        for (int i = 0; i < tamanho; i++) {
-            sb.append(info[i]);
-            if (i < tamanho - 1) {
-                sb.append(", ");
+        String res = " ";
+        for (int i = 0; i<tamanho;i++){
+            if(i>0){
+                res += ",";
             }
+            res = res + info[i].toString();
         }
-        sb.append("]");
-        return sb.toString();
+        return res;
     }
 }
