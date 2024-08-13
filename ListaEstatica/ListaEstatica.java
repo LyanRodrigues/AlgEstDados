@@ -51,13 +51,14 @@ public class ListaEstatica<T> {
 		for (int i = 0; i < tamanho; i++) {
 			if (valor.equals(info[i])) {
 				for (int x = i; x < tamanho - 1; x++) {
-					info[i] = info[i + 1];
-					i++;
+					info[x] = info[x + 1];
 				}
 				tamanho--;
+				break; // Exit the loop since the element has been removed
 			}
 		}
 	}
+	
 
 	public void liberar() {
 		for (int i = 0; i < tamanho; i++) {

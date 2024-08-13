@@ -4,14 +4,14 @@ public class ListaEstatica {
     private int[] info;
     private int tamanho;
 
-    public ListaEstatica(int[] info, int tamanho) {
-        info = new int[10];
-        tamanho = 0;
+    public ListaEstatica() {
+        this.info = new int[10];
+        this.tamanho = 0;
     }
 
     private void redimensionar(){
-        int[] novoVetor = new int[tamanho+10];
-        for(int i = 0; i <= tamanho; i++){
+        int[] novoVetor = new int[info.length + 10];
+        for(int i = 0; i < info.length; i++){
             novoVetor[i] = info[i];
         }
         info = novoVetor;
@@ -26,27 +26,46 @@ public class ListaEstatica {
     }
 
     public void exibir(){
-        
+        for (int i = 0; i < tamanho; i++){
+            System.out.println(info[i]);
+        }
     }
 
     public int buscar(int valor){
-        return valor;
+        for (int i = 0; i < tamanho; i++){
+            if (info[i] == valor){
+                return i;
+            }
+        }
+        return -1;
     }
 
     public void retirar(int valor){
-
+        for (int i = 0; i < tamanho; i++) {
+            if (valor == info[i]) {
+                for (int x = i; x < tamanho - 1; x++) {
+                    info[x] = info[x + 1];
+                }
+                tamanho--;
+                break; // Exit after removing the element
+            }
+        }
     }
 
     public void liberar(){
-
+        info = new int[10];
+        tamanho = 0;
     }
 
     public int obterElemento(int posicao){
-        return posicao;
+        if(posicao >= 0 && posicao < tamanho){
+            return info[posicao];
+        }
+        throw new IndexOutOfBoundsException("Posição inválida!");
     }
 
     public boolean estaVazia(){
-        return false;
+        return tamanho == 0;
     }
 
     public int getTamanho() {
@@ -54,7 +73,14 @@ public class ListaEstatica {
     }
 
     public String toString(){
-        return null;
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < tamanho; i++) {
+            sb.append(info[i]);
+            if (i < tamanho - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
-    
 }
