@@ -33,16 +33,17 @@ public class ListaEstatica {
 
     public int buscar(Object valor){
         for (int i = 0; i < tamanho; i++){
-            if (info[i] == valor){
+            if (info[i].equals(valor)){
                 return i;
             }
         }
         return -1;
     }
+    
 
     public void retirar(Object valor){
         for (int i = 0; i < tamanho; i++) {
-            if (valor == info[i]) {
+            if (info[i].equals(valor)) {
                 for (int x = i; x < tamanho - 1; x++) {
                     info[x] = info[x + 1];
                 }
@@ -51,6 +52,7 @@ public class ListaEstatica {
             }
         }
     }
+    
 
     public void liberar(){
         info = new Object[10];
@@ -73,13 +75,14 @@ public class ListaEstatica {
     }
 
     public String toString(){
-        String res = " ";
-        for (int i = 0; i<tamanho;i++){
-            if(i>0){
-                res += ",";
+        StringBuilder res = new StringBuilder();
+        for (int i = 0; i < tamanho; i++){
+            if(i > 0){
+                res.append(", ");
             }
-            res = res + info[i].toString();
+            res.append(info[i].toString());
         }
-        return res;
+        return res.toString();
     }
+    
 }
